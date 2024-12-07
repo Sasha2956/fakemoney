@@ -18,9 +18,9 @@ enum Colors {
 model User {
   id String @id @default(cuid())
 
-  email String? @unique
-  cards Card[]
-  stores Store[]
+  email                String? @unique
+  cards                Card[]
+  stores               Store[]
   isOnboardingComplete Boolean @default(false)
 
   createdAt DateTime @default(now())
@@ -30,15 +30,15 @@ model User {
 model Card {
   id String @id @default(cuid())
 
-  user User @relation(references: [id], fields: [userId])
-  userId String
-  color Colors
-  number Int
-  cvc Int
-  amount Int
-  sentTransactions Transaction[] @relation("FromCard")
+  user                User          @relation(references: [id], fields: [userId])
+  userId              String
+  color               Colors
+  number              Int
+  cvc                 Int
+  amount              Int
+  sentTransactions    Transaction[] @relation("FromCard")
   receiveTransactions Transaction[] @relation("ToCard")
-  stores Store[]
+  stores              Store[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -47,11 +47,11 @@ model Card {
 model Store {
   id String @id @default(cuid())
 
-  user User @relation(references: [id], fields: [userId])
-  userId String
-  card Card @relation(references: [id], fields: [cardId])
-  cardId String
-  name String
+  user         User          @relation(references: [id], fields: [userId])
+  userId       String
+  card         Card          @relation(references: [id], fields: [cardId])
+  cardId       String
+  name         String
   transactions Transaction[]
 
   createdAt DateTime @default(now())
@@ -61,13 +61,13 @@ model Store {
 model Transaction {
   id String @id @default(cuid())
 
-  from Card @relation("FromCard", fields: [fromId], references: [id])
+  from   Card   @relation("FromCard", fields: [fromId], references: [id])
   fromId String
 
-  to Card @relation("ToCard", fields: [toId], references: [id])
+  to   Card   @relation("ToCard", fields: [toId], references: [id])
   toId String
 
-  store Store? @relation(fields: [storeId], references: [id])
+  store   Store?  @relation(fields: [storeId], references: [id])
   storeId String?
 
   createdAt DateTime @default(now())
