@@ -16,21 +16,20 @@ enum Colors {
 }
 
 model User {
-  id            String          @id @default(cuid())
-  name          String?
-  email         String          @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  cards Card[]
-  stores Store[]
-  isOnboardingCompolete Boolean @default(false)
-  username String?
+  id                    String    @id @default(cuid())
+  name                  String?
+  email                 String?   @unique
+  emailVerified         DateTime?
+  image                 String?
+  accounts              Account[]
+  cards                 Card[]
+  stores                Store[]
+  isOnboardingCompolete Boolean   @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
- 
+
 model Account {
   userId            String
   type              String
@@ -43,12 +42,12 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
- 
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
- 
+
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
+
   @@id([provider, providerAccountId])
 }
 
@@ -60,7 +59,7 @@ model Card {
   color               Colors
   number              Int
   cvc                 Int
-  amount              Int @default(2500)
+  amount              Int           @default(2500)
   sentTransactions    Transaction[] @relation("FromCard")
   receiveTransactions Transaction[] @relation("ToCard")
   stores              Store[]
