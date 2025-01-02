@@ -3,11 +3,10 @@
 import { signIn } from "next-auth/react";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 
 export const AuthForm = () => {
   const onClick = () => {
-    signIn("github", { callbackUrl: DEFAULT_LOGIN_REDIRECT });
+    signIn("github", { callbackUrl: "/dashboard" });
   };
   return (
     <Card className="w-screen sm:w-[600px] max-sm:rounded-none max-sm:h-screen">

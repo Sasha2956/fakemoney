@@ -13,7 +13,7 @@ export const Navbar = () => {
     <header className="flex items-center justify-between py-7">
       <Link href="/">
         {" "}
-        <h3 className={cn("text-3xl", font.className)}>fakemoney.</h3>
+        <h3 className={cn("text-xl sm:text-3xl", font.className)}>fakemoney.</h3>
       </Link>
 
       <Button asChild>
