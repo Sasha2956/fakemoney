@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import { Harmattan } from "next/font/google"
 import { cn } from "@/lib/utils";
+import { UserButton } from "./user-button";
 
 const font = Harmattan({
     subsets: ["latin"],
@@ -19,6 +20,7 @@ export const Navbar = () => {
       <Button asChild>
         <Link href="/login">Sign in</Link>
       </Button>
+      <UserButton />
     </header>
   );
 };
