@@ -7,9 +7,17 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
+} from "../ui/dropdown-menu";
 import Image from "next/image";
-import { CreditCardIcon, DollarSignIcon, LayoutDashboardIcon, LogOutIcon, StoreIcon, User2Icon } from "lucide-react";
+import {
+  CreditCardIcon,
+  DollarSignIcon,
+  LayoutDashboardIcon,
+  LogOutIcon,
+  SettingsIcon,
+  StoreIcon,
+  User2Icon,
+} from "lucide-react";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 
@@ -18,7 +26,7 @@ export const UserButton = () => {
 
   const onLogOut = () => {
     signOut();
-  }
+  };
 
   return (
     <DropdownMenu>
@@ -32,28 +40,22 @@ export const UserButton = () => {
             className="rounded-full"
           />
         ) : (
-          <User2Icon
-            size={40}
-            className="rounded-full"
-          />
+          <User2Icon size={40} className="rounded-full" />
         )}
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <div className="flex gap-2 m-2">
-        {session.data?.user?.image ? (
-          <Image
-            src={session.data?.user?.image}
-            alt="Avatar"
-            width={50}
-            height={50}
-            className="rounded-full"
-          />
-        ) : (
-          <User2Icon
-            size={50}
-            className="rounded-full"
-          />
-        )}
+          {session.data?.user?.image ? (
+            <Image
+              src={session.data?.user?.image}
+              alt="Avatar"
+              width={50}
+              height={50}
+              className="rounded-full"
+            />
+          ) : (
+            <User2Icon size={50} className="rounded-full" />
+          )}
           <div>
             <p className="font-bold">{session.data?.user?.name}</p>
             <p className="truncate text-muted-foreground max-w-[160px]">
@@ -70,7 +72,7 @@ export const UserButton = () => {
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
           <Link href="/dashboard/cards">
-            <CreditCardIcon  />
+            <CreditCardIcon />
             Cards
           </Link>
         </DropdownMenuItem>
@@ -88,14 +90,17 @@ export const UserButton = () => {
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link href="/dashboard/settings">
-            <CreditCardIcon />
+            <SettingsIcon />
             Settings
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="text-destructive" onClick={() => onLogOut()}>
-            <LogOutIcon />
-            Log out
+        <DropdownMenuItem
+          className="text-destructive"
+          onClick={() => onLogOut()}
+        >
+          <LogOutIcon />
+          Log out
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
