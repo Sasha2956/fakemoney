@@ -10,6 +10,7 @@ import {
 } from "../ui/dropdown-menu";
 import Image from "next/image";
 import {
+  ChevronsUpDownIcon,
   CreditCardIcon,
   DollarSignIcon,
   LayoutDashboardIcon,
@@ -20,8 +21,14 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
+import { cn } from "@/lib/utils";
 
-export const UserButton = () => {
+interface UserButtonProps {
+  size?: "default" | "large";
+  className?: string
+}
+
+export const UserButton = ({ size = "default", className }: UserButtonProps) => {
   const session = useSession();
 
   const onLogOut = () => {
@@ -30,18 +37,29 @@ export const UserButton = () => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
-        {session.data?.user?.image ? (
-          <Image
-            src={session.data?.user?.image}
-            alt="Avatar"
-            width={40}
-            height={40}
-            className="rounded-full"
-          />
-        ) : (
-          <User2Icon size={40} className="rounded-full" />
-        )}
+      <DropdownMenuTrigger className={cn("flex justify-between items-center   ", className)}>
+        <div className="flex gap-2">
+          {session.data?.user?.image ? (
+            <Image
+              src={session.data?.user?.image}
+              alt="Avatar"
+              width={50}
+              height={50}
+              className="rounded-full"
+            />
+          ) : (
+            <User2Icon size={50} className="rounded-full" />
+          )}
+          {size === "large" && (
+            <div>
+              <p className="font-bold text-start">{session.data?.user?.name}</p>
+              <p className="truncate text-muted-foreground max-w-[230px]">
+                {session.data?.user?.email}
+              </p>
+            </div>
+          )}
+        </div>
+        {size === "large" && <ChevronsUpDownIcon />}
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <div className="flex gap-2 m-2">
