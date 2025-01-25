@@ -15,7 +15,7 @@ export const DashboardLinks = () => {
           href={link.href}
           key={index}
           className={cn(
-            "rounded-lg py-4 px-2 bg-gray-100 flex gap-2",
+            "rounded-lg py-4 px-2 bg-gray-100 flex gap-2 hover:bg-gray-100/50",
             pathname === link.href && "bg-white"
           )}
         >
