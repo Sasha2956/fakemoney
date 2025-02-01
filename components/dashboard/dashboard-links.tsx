@@ -1,27 +1,26 @@
-"use client"
+"use client";
 
 import { sidebarLinks } from "@/constants/sidebar";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Button } from "../ui/button";
 
 export const DashboardLinks = () => {
   const pathname = usePathname();
-  
+
   return (
     <div className="flex flex-col gap-y-4">
       {sidebarLinks.map((link, index) => (
-        <Link
-          href={link.href}
-          key={index}
-          className={cn(
-            "rounded-lg py-4 px-2 bg-gray-100 flex gap-2 hover:bg-gray-100/50",
-            pathname === link.href && "bg-white"
-          )}
-        >
-          <link.icon />
-          {link.name}
-        </Link>
+        <Button key={index} className="justify-start" asChild variant={pathname === link.href ? "outline" : "ghost"}>
+          <Link
+            href={link.href}
+            className="flex gap-2 py-6"
+          >
+            <link.icon />
+            {link.name}
+          </Link>
+        </Button>
       ))}
     </div>
   );

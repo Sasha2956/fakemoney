@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { auth } from "@/auth";
 import { SessionProvider } from "next-auth/react";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -16,7 +17,8 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  description: "Fakemoney is a payment platform same as Stripe,PayPal, but with fake money.",
+  description:
+    "Fakemoney is a payment platform same as Stripe, PayPal, but with fake money.",
 };
 
 export default async function RootLayout({
@@ -28,11 +30,19 @@ export default async function RootLayout({
 
   return (
     <SessionProvider session={session}>
-      <html lang="en">
+      <html lang="en" suppressHydrationWarning>
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          {children}
+          {/* TODO: Fetch basic theme from database */}
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
         </body>
       </html>
     </SessionProvider>
