@@ -2,11 +2,13 @@
 
 import { signIn } from "@/auth";
 import { getUserByEmail } from "@/lib/user";
-import { loginSchema, registerSchema } from "@/schemas";
+import { loginSchema } from "@/schemas";
 import { AuthError } from "next-auth";
 import { z } from "zod";
 
-export const login = async (values: z.infer<typeof loginSchema>): Promise<string | undefined> => {
+export const login = async (
+  values: z.infer<typeof loginSchema>
+): Promise<string | undefined> => {
   const validatedFields = loginSchema.safeParse(values);
 
   if (!validatedFields.success) {
@@ -25,6 +27,7 @@ export const login = async (values: z.infer<typeof loginSchema>): Promise<string
     await signIn("credentials", {
       email,
       password,
+      redirect: false,
     });
   } catch (error) {
     console.error(`⨯ Error logging in user: \n ${error}`);
@@ -40,4 +43,4 @@ export const login = async (values: z.infer<typeof loginSchema>): Promise<string
 
     return "Something went wrong";
   }
-}
+};

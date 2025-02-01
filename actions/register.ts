@@ -6,6 +6,7 @@ import bcrypt from "bcryptjs"
 import prisma from "@/lib/prisma"
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library"
 import { signIn } from "@/auth"
+import randomColor from "randomcolor"
 
 export const register = async (values: z.infer<typeof registerSchema>): Promise<string | undefined> => {
   const validatedFields = registerSchema.safeParse(values);
@@ -24,6 +25,7 @@ export const register = async (values: z.infer<typeof registerSchema>): Promise<
         name: username,
         email,
         password: hashedPassword,
+        imageBgColor: randomColor({ luminosity: "light" }),
       }
     });
     await signIn("credentials", {

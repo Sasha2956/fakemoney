@@ -3,7 +3,7 @@ import { StoresIncomeCard } from "@/components/dashboard/stores-income-card";
 import { requireUser } from "@/lib/require-user";
 
 export default async function DashboardPage() {
-  const user = await requireUser();
+  void await requireUser();
 
   return (
     <>

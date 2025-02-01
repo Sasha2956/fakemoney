@@ -22,6 +22,8 @@ model User {
   password              String?
   emailVerified         DateTime?
   image                 String?
+  imageBgColor          String?
+  imageTextColor        String?   @default("#fff")
   accounts              Account[]
   cards                 Card[]
   stores                Store[]

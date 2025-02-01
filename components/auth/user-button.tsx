@@ -17,18 +17,21 @@ import {
   LogOutIcon,
   SettingsIcon,
   StoreIcon,
-  User2Icon,
 } from "lucide-react";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 import { cn } from "@/lib/utils";
+import initials from "initials";
 
 interface UserButtonProps {
   size?: "default" | "large";
-  className?: string
+  className?: string;
 }
 
-export const UserButton = ({ size = "default", className }: UserButtonProps) => {
+export const UserButton = ({
+  size = "default",
+  className,
+}: UserButtonProps) => {
   const session = useSession();
 
   const onLogOut = () => {
@@ -37,7 +40,9 @@ export const UserButton = ({ size = "default", className }: UserButtonProps) => 
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className={cn("flex justify-between items-center   ", className)}>
+      <DropdownMenuTrigger
+        className={cn("flex justify-between items-center", className)}
+      >
         <div className="flex gap-2">
           {session.data?.user?.image ? (
             <Image
@@ -48,7 +53,17 @@ export const UserButton = ({ size = "default", className }: UserButtonProps) => 
               className="rounded-full"
             />
           ) : (
-            <User2Icon size={50} className="rounded-full" />
+            <div
+              style={{ backgroundColor: session.data?.user.imageBgColor }}
+              className="flex w-[50px] h-[50px] rounded-full"
+            >
+              <p
+                className="flex w-full items-center justify-center font-bold uppercase"
+                style={{ color: session.data?.user.imageTextColor }}
+              >
+                {initials(session.data?.user?.name as string)}
+              </p>
+            </div>
           )}
           {size === "large" && (
             <div>
@@ -72,7 +87,17 @@ export const UserButton = ({ size = "default", className }: UserButtonProps) => 
               className="rounded-full"
             />
           ) : (
-            <User2Icon size={50} className="rounded-full" />
+            <div
+              style={{ backgroundColor: session.data?.user.imageBgColor }}
+              className="flex w-[50px] h-[50px] rounded-full"
+            >
+              <p
+                className="flex w-full items-center justify-center font-bold uppercase"
+                style={{ color: session.data?.user.imageTextColor }}
+              >
+                {initials(session.data?.user?.name as string)}
+              </p>
+            </div>
           )}
           <div>
             <p className="font-bold">{session.data?.user?.name}</p>
