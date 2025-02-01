@@ -18,17 +18,13 @@ const font = Harmattan({
   weight: ["400"],
 });
 
-interface DashboardNavbarProps {
-  className: string;
-}
-
-export const DashboardNavbar = ({ className }: DashboardNavbarProps) => {
+export const DashboardNavbar = () => {
   return (
     <header
-      className={cn("flex items-center justify-between py-7 w-full", className)}
+      className="flex items-center justify-between py-7 w-full max-w-screen-xl mx-auto px-3"
     >
       <Link href="/">
-        <h3 className={cn("text-xl sm:text-3xl", font.className)}>
+        <h3 className={cn("text-3xl", font.className)}>
           fakemoney.
         </h3>
       </Link>

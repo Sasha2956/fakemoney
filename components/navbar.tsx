@@ -18,7 +18,7 @@ export const Navbar = async ({ className }: NavbarProps) => {
   const session = await auth();
 
   return (
-    <header className={cn("flex items-center justify-between py-7 w-full", className)}>
+    <header className={cn("flex items-center justify-between py-7 w-full max-w-screen-xl mx-auto px-3", className)}>
       <Link href="/">
         <h3 className={cn("text-xl sm:text-3xl", font.className)}>
           fakemoney.
