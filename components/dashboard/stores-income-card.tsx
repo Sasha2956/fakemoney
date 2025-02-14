@@ -1,51 +1,41 @@
 "use client"
 
-import * as React from "react"
-import { Label, Pie, PieChart } from "recharts"
+  import * as React from "react"
+  import { Label, Pie, PieChart } from "recharts"
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
-const chartData = [
-  { browser: "Grocery shop", income: 275, fill: "#f367f8" },
-  { browser: "Mobile store", income: 200, fill: "#d65a6f" },
-  { browser: "Games store", income: 287, fill: "#b68dff" },
-  { browser: "Computer store", income: 173, fill: "#a65fff" },
+  import {
+    ChartConfig,
+    ChartContainer,
+    ChartTooltip,
+    ChartTooltipContent,
+  } from "@/components/ui/chart"
+  import { DashboardCard } from "./dashboard-card"
+  const chartData = [
+  { store: "Grocery shop", income: 275, fill: "#f367f8" },
+  { store: "Mobile store", income: 200, fill: "#d65a6f" },
+  { store: "Games store", income: 287, fill: "#b68dff" },
+  { store: "Computer store", income: 173, fill: "#a65fff" },
 ]
 
 const chartConfig = {
   income: {
     label: "Income",
   },
-  chrome: {
-    label: "Chrome",
+  "Grocery shop": {
+    label: "Grocery shop",
     color: "#f367f8",
   },
-  safari: {
-    label: "Safari",
+  "Mobile store": {
+    label: "Mobile store",
     color: "#d65a6f",
   },
-  firefox: {
-    label: "Firefox",
+  "Games store": {
+    label: "Games store",
     color: "#b68dff",
   },
-  edge: {
-    label: "Edge",
+  "Computer store": {
+    label: "Computer store",
     color: "#a65fff",
-  },
-  other: {
-    label: "Other",
-    color: "#c65ff8",
   },
 } satisfies ChartConfig
 
@@ -55,12 +45,7 @@ export function StoresIncomeCard() {
   }, [])
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Total income</CardTitle>
-        <CardDescription>Income from your stores for all time</CardDescription>
-      </CardHeader>
-      <CardContent className="p-0">
+    <DashboardCard title="Total income" description="Income from your stores for all time">
       <ChartContainer
           config={chartConfig}
           className="mx-auto aspect-square max-h-[250px]"
@@ -109,7 +94,6 @@ export function StoresIncomeCard() {
             </Pie>
           </PieChart>
         </ChartContainer>
-      </CardContent>
-    </Card>
+    </DashboardCard>
   )
 }

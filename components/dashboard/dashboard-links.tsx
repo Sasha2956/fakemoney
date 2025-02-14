@@ -1,7 +1,6 @@
 "use client";
 
 import { sidebarLinks } from "@/constants/sidebar";
-import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "../ui/button";

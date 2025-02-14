@@ -106,7 +106,7 @@ export const RegisterForm = () => {
           </form>
         </Form>
         <div className="relative border-b">
-          <p className="absolute left-1/2 top-1/2 px-4 bg-white transform -translate-x-1/2 -translate-y-1/2">
+          <p className="absolute left-1/2 top-1/2 px-4 bg-card transform -translate-x-1/2 -translate-y-1/2">
             or
           </p>
         </div>

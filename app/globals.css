@@ -70,3 +70,11 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+*::-webkit-scrollbar {
+  @apply bg-slate-100 dark:bg-slate-800;
+}
+
+*::-webkit-scrollbar-thumb {
+  @apply bg-slate-200 dark:bg-slate-900 rounded-full;
+}
