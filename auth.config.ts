@@ -14,16 +14,21 @@ export default {
 
       const existingUser = await prisma.user.findUnique({
         where: {
-          id: token.sub
+          id: token.sub,
         },
         include: {
-          cards: true,
+          cards: {
+            include: {
+              sentTransactions: true,
+              receiveTransactions: true,
+            }
+          },
           stores: {
             include: {
-              card: true
-            }
-          }
-        }
+              transactions: true
+            },
+          },
+        },
       });
 
       if (!existingUser) return token;
@@ -37,7 +42,7 @@ export default {
 
       return token;
     },
-    async session({token, session}) {
+    async session({ token, session }) {
       if (token.sub && session.user) {
         session.user.id = token.sub;
       }
@@ -52,7 +57,7 @@ export default {
       }
 
       return session;
-    }
+    },
   },
   providers: [
     GitHub,
@@ -71,7 +76,7 @@ export default {
 
         const passwordsMatch = await bcrypt.compare(
           password,
-          user.password as string
+          user.password as string,
         );
 
         if (!passwordsMatch) {

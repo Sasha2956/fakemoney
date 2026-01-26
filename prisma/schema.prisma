@@ -7,27 +7,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Colors {
-  RED
-  BLUE
-  GREEN
-  PINK
-  PURPLE
-}
-
 model User {
-  id                    String    @id @default(cuid())
-  name                  String?
-  email                 String?   @unique
-  password              String?
-  emailVerified         DateTime?
-  image                 String?
-  imageBgColor          String?
-  imageTextColor        String?   @default("#fff")
-  accounts              Account[]
-  cards                 Card[]
-  stores                Store[]
-  isOnboardingCompolete Boolean   @default(false)
+  id             String    @id @default(cuid())
+  name           String?
+  email          String?   @unique
+  password       String?
+  emailVerified  DateTime?
+  image          String?
+  imageBgColor   String?
+  imageTextColor String?   @default("#fff")
+  accounts       Account[]
+  cards          Card[]
+  selectedCard   Card?     @relation("SelectedCard", fields: [selectedCardId], references: [id])
+  selectedCardId String?   @unique
+  stores         Store[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -59,13 +52,12 @@ model Card {
 
   user                User          @relation(references: [id], fields: [userId])
   userId              String
-  color               Colors
-  number              Int
-  cvc                 Int
+  selectedByUser      User?         @relation("SelectedCard")
+  color               String
+  name                String
   amount              Int           @default(2500)
   sentTransactions    Transaction[] @relation("FromCard")
   receiveTransactions Transaction[] @relation("ToCard")
-  stores              Store[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -76,8 +68,7 @@ model Store {
 
   user         User          @relation(references: [id], fields: [userId])
   userId       String
-  card         Card          @relation(references: [id], fields: [cardId])
-  cardId       String
+  apiKey       String
   name         String
   transactions Transaction[]
 
@@ -88,11 +79,13 @@ model Store {
 model Transaction {
   id String @id @default(cuid())
 
+  amount Int
+
   from   Card   @relation("FromCard", fields: [fromId], references: [id])
   fromId String
 
-  to   Card   @relation("ToCard", fields: [toId], references: [id])
-  toId String
+  to   Card?   @relation("ToCard", fields: [toId], references: [id])
+  toId String?
 
   store   Store?  @relation(fields: [storeId], references: [id])
   storeId String?

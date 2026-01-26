@@ -1,16 +1,6 @@
 import Link from "next/link";
 import { Harmattan } from "next/font/google";
 import { cn } from "@/lib/utils";
-import { MenuIcon } from "lucide-react";
-import {
-  Sheet,
-  SheetContent,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "../ui/sheet";
-import { DashboardLinks } from "./dashboard-links";
 import { UserButton } from "../auth/user-button";
 
 const font = Harmattan({
@@ -28,22 +18,6 @@ export const DashboardNavbar = () => {
           fakemoney.
         </h3>
       </Link>
-      <Sheet>
-        <SheetTrigger>
-          <MenuIcon className="lg:hidden" />
-        </SheetTrigger>
-        <SheetContent>
-          <SheetHeader className="items-start">
-            <SheetTitle className={cn("text-3xl", font.className)}>
-              fakemoney.
-            </SheetTitle>
-          </SheetHeader>
-          <DashboardLinks />
-          <SheetFooter className="mt-10">
-            <UserButton size="large" className="w-full" />
-          </SheetFooter>
-        </SheetContent>
-      </Sheet>
       <UserButton className="hidden lg:block" />
     </header>
   );

@@ -1,5 +1,5 @@
-import { DashboardNavbar } from "@/components/dashboard/dashboard-navbar";
 import { Sidebar } from "@/components/dashboard/sidebar";
+import { Navbar } from "@/components/navbar";
 
 export default function DashboardLayout({
   children,
@@ -8,7 +8,7 @@ export default function DashboardLayout({
 }) {
   return (
     <main className="h-screen overflow-visible">
-      <DashboardNavbar />
+      <Navbar hasMobileSidebar />
       <div className="flex flex-grow p-2">
         <Sidebar />
         <div className="flex flex-col flex-1">{children}</div>
