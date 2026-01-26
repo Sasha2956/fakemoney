@@ -4,7 +4,10 @@ import prisma from "@/lib/prisma";
 import { UpdateCard } from "@/services/dto/card.dto";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function DELETE(req: NextRequest, { params }: { params: { id?: string } }) {
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+) {
   try {
     const { id } = await params;
     if (!id) {
@@ -45,7 +48,7 @@ export async function DELETE(req: NextRequest, { params }: { params: { id?: stri
 
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const { id } = await params;
