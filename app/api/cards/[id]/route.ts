@@ -4,7 +4,7 @@ import prisma from "@/lib/prisma";
 import { UpdateCard } from "@/services/dto/card.dto";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function DELETE({ params }: { params: { id?: string } }) {
+export async function DELETE(req: NextRequest, { params }: { params: { id?: string } }) {
   try {
     const { id } = await params;
     if (!id) {

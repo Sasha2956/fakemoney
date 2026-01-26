@@ -8,11 +8,11 @@ interface ReturnProps {
 export const getCardStoreDetails = (
   cards: CardStateItem[],
 ): ReturnProps => {
-  const items: CardStateItem[] = cards.map((card) => ({
+  const items: CardStateItem[] = cards.length ? cards.map((card) => ({
     ...card,
     disabled: false,
     selected: card.user.selectedCardId === card.id,
-  }));
+  })) : [];
 
   const selectedCard = items.filter(
     (card) => card.user.selectedCardId === card.id,
