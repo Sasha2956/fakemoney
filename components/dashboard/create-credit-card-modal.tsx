@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { DialogHeader, DialogTitle } from "../ui/dialog";
+import { DialogClose, DialogHeader, DialogTitle } from "../ui/dialog";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 
@@ -21,7 +21,9 @@ export const CreateCreditCardModal = ({ onSubmit }: Props) => {
         placeholder="Card name"
         onChange={(e) => setCardName(e.target.value)}
       />
-      <Button onClick={() => onSubmit?.(cardName)}>Create card</Button>
+      <DialogClose asChild>
+        <Button onClick={() => onSubmit?.(cardName)}>Create card</Button>
+      </DialogClose>
     </>
   );
 };

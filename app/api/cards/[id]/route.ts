@@ -23,6 +23,9 @@ export async function DELETE(
       where: {
         id,
       },
+      include: {
+        user: true,
+      },
     });
     if (!card) {
       return NextResponse.json({ message: "Card not found" });
@@ -33,6 +36,25 @@ export async function DELETE(
         id,
       },
     });
+
+    if (card.user.selectedCardId === card.id) {
+      const newSelectedCard = await prisma.card.findFirst({
+        where: {
+          userId: session.user.id,
+        },
+      });
+
+      if (newSelectedCard) {
+        await prisma.user.update({
+          where: {
+            id: session.user.id,
+          },
+          data: {
+            selectedCardId: newSelectedCard.id,
+          },
+        });
+      }
+    }
 
     const cards = await getCards(session.user.id);
 
@@ -70,10 +92,10 @@ export async function PATCH(
       return NextResponse.json({ message: "Card not found" });
     }
 
-    if (body.amount !== undefined) {
+    if (body.amount) {
       await prisma.card.update({
         where: {
-          id: body.id,
+          id,
         },
         data: {
           amount: { increment: body.amount },
@@ -85,7 +107,7 @@ export async function PATCH(
           id: session.user.id,
         },
         data: {
-          selectedCardId: body.id,
+          selectedCardId: id,
         },
       });
     }

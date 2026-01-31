@@ -15,14 +15,14 @@ export const CreateCreditCardButton = ({ onSubmit, className }: Props) => {
         <button
           className={cn(
             className,
-            "w-72 h-36 rounded-md flex flex-col gap-2 justify-center items-center p-3 border-dashed border-red-600 hover:bg-black/30 transition-colors duration-300",
+            "w-72 h-36 rounded-md flex flex-col gap-2 justify-center items-center p-3 border border-dashed border-white/40 hover:bg-black/30 transition-colors duration-300",
           )}
         >
           <PlusCircleIcon />
           <p className="font-bold">Add card</p>
         </button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="space-y-6">
         <CreateCreditCardModal onSubmit={onSubmit} />
       </DialogContent>
     </Dialog>

@@ -102,7 +102,7 @@ export const useCardStore = create<CardState>((set, get) => ({
       set({
         cards: get().cards.map((card) => ({
           ...card,
-          disabled: false,
+          disabled: card.id === id,
         })),
       });
     }
