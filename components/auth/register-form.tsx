@@ -33,7 +33,7 @@ export const RegisterForm = () => {
   const [error, setError] = useState<Promise<string | undefined>>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const onClick = () => {
+  const onClickGithub = () => {
     signIn("github", { callbackUrl: "/dashboard" });
   };
   const onSubmit = (values: z.infer<typeof registerSchema>) => {
@@ -110,7 +110,7 @@ export const RegisterForm = () => {
             or
           </p>
         </div>
-        <Button className="w-full" variant="outline" onClick={onClick}>
+        <Button className="w-full" variant="outline" onClick={onClickGithub}>
           <Github />
           Sign in with GitHub
         </Button>

@@ -1,11 +1,8 @@
 import { BalanceCard } from "@/components/dashboard/balance-card";
 import { OutcomesCard } from "@/components/dashboard/outcomes-card";
 import { StoresIncomeCard } from "@/components/dashboard/stores-income-card";
-import { requireUser } from "@/lib/require-user";
 
-export default async function DashboardPage() {
-  await requireUser();
-
+export default function DashboardPage() {
   return (
     <div className="flex flex-col flex-1">
       <h1 className="text-3xl font-bold mb-2">Profile overview</h1>
@@ -15,5 +12,5 @@ export default async function DashboardPage() {
         <OutcomesCard />
       </div>
     </div>
-  )
+  );
 }

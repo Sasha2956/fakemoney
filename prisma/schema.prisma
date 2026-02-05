@@ -55,7 +55,7 @@ model Card {
   selectedByUser      User?         @relation("SelectedCard")
   color               String
   name                String
-  amount              Int           @default(2500)
+  amount              Decimal       @default(2500)
   sentTransactions    Transaction[] @relation("FromCard")
   receiveTransactions Transaction[] @relation("ToCard")
 
@@ -71,6 +71,7 @@ model Store {
   apiKey       String
   name         String
   transactions Transaction[]
+  revenue      Decimal       @default(0)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

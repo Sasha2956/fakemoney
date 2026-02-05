@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
 
     const body = (await req.json()) as CreateCard;
 
-    const newCard = await prisma.card.create({
+    await prisma.card.create({
       data: {
         color: randomColor({ luminosity: "dark" }),
         userId: session.user.id,
@@ -36,17 +36,6 @@ export async function POST(req: NextRequest) {
     });
 
     const cards = await getCards(session.user.id);
-
-    if (cards.length === 1) {
-      await prisma.user.update({
-        where: {
-          id: session.user.id,
-        },
-        data: {
-          selectedCardId: newCard.id,
-        },
-      });
-    }
 
     return NextResponse.json(cards);
   } catch (err) {

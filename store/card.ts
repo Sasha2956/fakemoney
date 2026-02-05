@@ -12,7 +12,7 @@ export interface CardStateItem extends CardWithRelations {
 export interface CardState {
   cards: CardStateItem[];
   loading: boolean;
-  error?: boolean;
+  error: boolean;
   selectedCard?: CardWithRelations;
 
   fetchCards: () => Promise<void>;
@@ -24,7 +24,7 @@ export interface CardState {
 export const useCardStore = create<CardState>((set, get) => ({
   cards: [],
   loading: false,
-  erorr: false,
+  error: false,
   fetchCards: async () => {
     try {
       set({
@@ -98,13 +98,6 @@ export const useCardStore = create<CardState>((set, get) => ({
         error: true,
       });
       console.error(err);
-    } finally {
-      set({
-        cards: get().cards.map((card) => ({
-          ...card,
-          disabled: card.id === id,
-        })),
-      });
     }
   },
 }));

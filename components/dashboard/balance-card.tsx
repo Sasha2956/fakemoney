@@ -41,7 +41,7 @@ export const BalanceCard = () => {
       {loading ? (
         <p>Loading...</p>
       ) : selectedCard ? (
-        <h1 className="text-4xl font-extrabold">${selectedCard?.amount}</h1>
+        <h1 className="text-4xl font-extrabold">${Number(selectedCard?.amount)}</h1>
       ) : (
         <p>No card selected</p>
       )}

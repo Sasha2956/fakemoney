@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { DialogHeader, DialogTitle } from "../ui/dialog";
+import { DialogClose, DialogHeader, DialogTitle } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { NumberInput } from "../number-input";
 
@@ -22,7 +22,9 @@ export const IncreaseCreditCardAmountModal = ({ onSubmit }: Props) => {
         type="number"
         onChange={(e) => setAmount(e.target.value)}
       />
-      <Button onClick={() => onSubmit?.(Number(amount))}>Submit</Button>
+      <DialogClose asChild>
+        <Button onClick={() => onSubmit?.(Number(amount))}>Submit</Button>
+      </DialogClose>
     </>
   );
 };
