@@ -82,8 +82,8 @@ model Transaction {
 
   amount Int
 
-  from   Card   @relation("FromCard", fields: [fromId], references: [id])
-  fromId String
+  from   Card?   @relation("FromCard", fields: [fromId], references: [id])
+  fromId String?
 
   to   Card?   @relation("ToCard", fields: [toId], references: [id])
   toId String?
@@ -91,6 +91,15 @@ model Transaction {
   store   Store?  @relation(fields: [storeId], references: [id])
   storeId String?
 
+  status      TransactionStatus @default(PENDING)
+  returnUrl   String?
+  description String?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+enum TransactionStatus {
+  PENDING
+  CONFIRMED
 }
