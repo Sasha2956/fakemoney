@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       id: transaction.id,
-      confirmationUrl,
+      confirmation_url: confirmationUrl,
       status: transaction.status,
       amount: transaction.amount,
       metadata: body.metadata,

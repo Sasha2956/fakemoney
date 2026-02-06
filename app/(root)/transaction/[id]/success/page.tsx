@@ -3,6 +3,7 @@ import prisma from "@/lib/prisma";
 import { requireUser } from "@/lib/require-user";
 import { TransactionStatus } from "@prisma/client";
 import { SmileIcon } from "lucide-react";
+import Link from "next/link";
 import { notFound, redirect, RedirectType } from "next/navigation";
 
 export default async function TransactionSuccessPage({
@@ -39,7 +40,9 @@ export default async function TransactionSuccessPage({
         <br />
         If it doesnt happen, Click on the button
       </p>
-      <Button className="w-96">Go to the site</Button>
+      <Link href={transaction?.returnUrl || "#"}>
+        <Button className="w-96">Go to the site</Button>
+      </Link>
     </div>
   );
 }

@@ -57,6 +57,15 @@ export const confirmTransaction = async (
       },
     });
 
+    await prisma.store.update({
+      where: {
+        id: transaction.storeId!,
+      },
+      data: {
+        revenue: { increment: transaction.amount },
+      },
+    });
+
     const successUrl = `/transaction/${transaction.id}/success`;
 
     return { url: successUrl };
