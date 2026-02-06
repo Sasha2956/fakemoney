@@ -11,16 +11,14 @@ export default async function StorePage({
 }) {
   const { id } = await params;
   const session = await auth();
-  const store = await prisma.store.findUnique({
+  const store = await prisma.store.findFirst({
     where: {
       id,
       userId: session?.user.id,
     },
   });
 
-  if (!store) {
-    return notFound();
-  }
+  if (!store) notFound();
 
   return (
     <>
