@@ -16,12 +16,15 @@ import {
   FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
-import { Github, TriangleAlertIcon } from "lucide-react";
+import { Github } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { login } from "@/actions/login";
+import { ErrorMessage } from "../error-message";
+import { useRouter } from "next/navigation";
 
 export const LoginForm = () => {
+  const router = useRouter();
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -29,14 +32,18 @@ export const LoginForm = () => {
       password: "",
     },
   });
-  const [error, setError] = useState<Promise<string | undefined>>();
+  const [error, setError] = useState<string | undefined>();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const onClick = () => {
     signIn("github", { callbackUrl: "/dashboard" });
   };
-  const onSubmit = (values: z.infer<typeof loginSchema>) => {
-    const result = login(values);
+  const onSubmit = async (values: z.infer<typeof loginSchema>) => {
+    setLoading(true);
+    const result = await login(values);
     setError(result);
+    router.push("/dashboard");
+    setLoading(false);
   };
 
   return (
@@ -79,13 +86,10 @@ export const LoginForm = () => {
                 )}
               />
             </div>
-            <Button className="w-full">Submit</Button>
-            {error && (
-              <div className="bg-red-700/15 text-destructive flex justify-center p-4 rounded-md gap-2 border border-destructive">
-                <TriangleAlertIcon />
-                <p>{error}</p>
-              </div>
-            )}
+            <Button className="w-full" isLoading={loading}>
+              Submit
+            </Button>
+            {error && <ErrorMessage message={error} />}
           </form>
         </Form>
         <div className="relative border-b">

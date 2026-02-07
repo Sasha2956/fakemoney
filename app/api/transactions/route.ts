@@ -36,6 +36,7 @@ export async function POST(req: NextRequest) {
         amount: body.amount,
         returnUrl: body.returnUrl,
         description: body.description,
+        metadata: body.metadata || undefined,
       },
     });
 
@@ -46,7 +47,7 @@ export async function POST(req: NextRequest) {
       confirmation_url: confirmationUrl,
       status: transaction.status,
       amount: transaction.amount,
-      metadata: body.metadata,
+      metadata: transaction.metadata,
     });
   } catch (err) {
     console.error(err);

@@ -2,6 +2,7 @@
 
 import prisma from "@/lib/prisma";
 import { TransactionStatus } from "@prisma/client";
+import axios from "axios";
 
 interface ReturnProps {
   error?: string;
@@ -27,6 +28,9 @@ export const confirmTransaction = async (
       where: {
         id: transactionId,
         status: TransactionStatus.PENDING,
+      },
+      include: {
+        store: true,
       },
     });
 
@@ -67,6 +71,23 @@ export const confirmTransaction = async (
     });
 
     const successUrl = `/transaction/${transaction.id}/success`;
+
+    if (transaction.store?.callbackUrl) {
+      try {
+        await axios.post(transaction.store?.callbackUrl, {
+          event: "payment_successfull",
+          data: {
+            id: transaction.id,
+            description: transaction.description,
+            status: transaction.status,
+            metadata: transaction.metadata,
+            amount: transaction.amount,
+          },
+        });
+      } catch (err) {
+        console.error(err);
+      }
+    }
 
     return { url: successUrl };
   } catch (err) {

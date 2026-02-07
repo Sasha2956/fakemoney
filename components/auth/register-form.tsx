@@ -16,12 +16,15 @@ import {
   FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
-import { Github, TriangleAlertIcon } from "lucide-react";
+import { GithubIcon } from "lucide-react";
 import Link from "next/link";
 import { register } from "@/actions/register";
 import { useState } from "react";
+import { ErrorMessage } from "../error-message";
+import { useRouter } from "next/navigation";
 
 export const RegisterForm = () => {
+  const router = useRouter();
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -30,16 +33,17 @@ export const RegisterForm = () => {
       password: "",
     },
   });
-  const [error, setError] = useState<Promise<string | undefined>>();
+  const [error, setError] = useState<string | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const onClickGithub = () => {
     signIn("github", { callbackUrl: "/dashboard" });
   };
-  const onSubmit = (values: z.infer<typeof registerSchema>) => {
+  const onSubmit = async (values: z.infer<typeof registerSchema>) => {
     setIsLoading(true);
-    const result = register(values);
+    const result = await register(values);
     setError(result);
+    router.push("/login");
     setIsLoading(false);
   };
 
@@ -96,13 +100,14 @@ export const RegisterForm = () => {
                 )}
               />
             </div>
-            <Button className="w-full" disabled={isLoading} isLoading={isLoading}>Submit</Button>
-            {error && (
-              <div className="bg-red-700/15 text-destructive flex justify-center p-4 rounded-md gap-2 border border-destructive">
-                <TriangleAlertIcon />
-                <p>{error}</p>
-              </div>
-            )}
+            <Button
+              className="w-full"
+              disabled={isLoading}
+              isLoading={isLoading}
+            >
+              Submit
+            </Button>
+            {error && <ErrorMessage message={error} />}
           </form>
         </Form>
         <div className="relative border-b">
@@ -111,13 +116,16 @@ export const RegisterForm = () => {
           </p>
         </div>
         <Button className="w-full" variant="outline" onClick={onClickGithub}>
-          <Github />
+          <GithubIcon />
           Sign in with GitHub
         </Button>
 
         <div className="justify-center flex gap-2">
           <p>Already have an account</p>
-          <Link href="/login" className="hover:font-bold text-blue-500 underline">
+          <Link
+            href="/login"
+            className="hover:font-bold text-blue-500 underline"
+          >
             Sign In
           </Link>
         </div>

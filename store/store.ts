@@ -1,6 +1,7 @@
 import { StoreWithRelations } from "@/@types/prisma";
 import { createStoreSchema } from "@/schemas";
 import { Api } from "@/services/api-client";
+import { UpdateStoreValues } from "@/services/dto/store.dto";
 import { z } from "zod";
 import { create } from "zustand";
 
@@ -15,6 +16,7 @@ export interface StoreState {
 
   fetchStores: () => Promise<void>;
   addStore: (values: z.infer<typeof createStoreSchema>) => Promise<void>;
+  updateStore: (params: UpdateStoreValues, id: string) => Promise<void>;
   deleteStore: (id: string) => Promise<void>;
 }
 
@@ -48,6 +50,25 @@ export const useStoreStore = create<StoreState>((set, get) => ({
         error: false,
       });
       const data = await Api.store.createStore(values);
+      set({ stores: data });
+    } catch (err) {
+      set({
+        error: true,
+      });
+      console.error(err);
+    } finally {
+      set({
+        loading: false,
+      });
+    }
+  },
+  updateStore: async (params: UpdateStoreValues, id: string) => {
+    try {
+      set({
+        loading: true,
+        error: false,
+      });
+      const data = await Api.store.updateStore(params, id);
       set({ stores: data });
     } catch (err) {
       set({
