@@ -26,11 +26,12 @@ export const CardsDropdown = ({
   const loading = useCardStore((state) => state.loading);
   const selectedCard = useCardStore((state) => state.selectedCard);
   const fetchCards = useCardStore((state) => state.fetchCards);
-  const [selected, setSelected] = useState(selectedCard || cards[0]);
+  const [selected, setSelected] = useState<CardWithRelations>();
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
     fetchCards();
+    setSelected(selectedCard || cards[0]);
   }, []);
 
   const onClickCard = (card: CardWithRelations) => {

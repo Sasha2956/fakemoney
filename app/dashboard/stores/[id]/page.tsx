@@ -43,7 +43,7 @@ export default async function StorePage({
           </DashboardCard>
         </TabsContent>
         <TabsContent value="callbacks">
-          <CallbacksForm store={{ ...store, revenue: Number(store.revenue) }} />
+          <CallbacksForm store={store} />
         </TabsContent>
       </Tabs>
     </>

@@ -71,7 +71,7 @@ model Store {
   apiKey       String
   name         String
   transactions Transaction[]
-  revenue      Decimal       @default(0)
+  revenue      Int       @default(0)
   callbackUrl  String?
 
   createdAt DateTime @default(now())
