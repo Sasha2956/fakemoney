@@ -31,35 +31,41 @@ export const CardsDropdown = ({
 
   useEffect(() => {
     fetchCards();
-    setSelected(selectedCard || cards[0]);
   }, []);
+
+  useEffect(() => {
+    if (cards.length > 0) {
+      setSelected(selectedCard ?? cards[0]);
+    }
+  }, [cards]);
+
+  useEffect(() => {
+    if (selected) {
+      onChange?.(selected.id);
+    }
+  }, [selected]);
 
   const onClickCard = (card: CardWithRelations) => {
     setSelected(card);
     setOpen(false);
-    onChange?.(card.id);
   };
 
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
-        {selected ? (
-          loading ? (
-            <Loader2Icon className="animate-spin" />
-          ) : (
-            <button className={cn("flex justify-between p-2", className)}>
-              <div className="flex gap-2">
-                <div
-                  className="w-10 h-6 rounded-sm"
-                  style={{ backgroundColor: selected.color }}
-                />
-                <p className="font-bold">{selected?.name}</p>
-              </div>
-              <ChevronDownIcon />
-            </button>
-          )
+        {loading ? (
+          <Loader2Icon className="animate-spin" />
         ) : (
-          <p>No cards</p>
+          <button className={cn("flex justify-between p-2", className)}>
+            <div className="flex gap-2">
+              <div
+                className="w-10 h-6 rounded-sm"
+                style={{ backgroundColor: selected?.color }}
+              />
+              <p className="font-bold">{selected?.name}</p>
+            </div>
+            <ChevronDownIcon />
+          </button>
         )}
       </DropdownMenuTrigger>
       <DropdownMenuContent

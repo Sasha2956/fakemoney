@@ -21,10 +21,11 @@ import Link from "next/link";
 import { register } from "@/actions/register";
 import { useState } from "react";
 import { ErrorMessage } from "../error-message";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export const RegisterForm = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -36,14 +37,16 @@ export const RegisterForm = () => {
   const [error, setError] = useState<string | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const redirectUrl = searchParams.get("next") || "";
+
   const onClickGithub = () => {
-    signIn("github", { callbackUrl: "/dashboard" });
+    signIn("github", { callbackUrl: redirectUrl || "/dashboard" });
   };
   const onSubmit = async (values: z.infer<typeof registerSchema>) => {
     setIsLoading(true);
     const result = await register(values);
     setError(result);
-    router.push("/login");
+    router.push(redirectUrl || "/dashboard");
     setIsLoading(false);
   };
 
@@ -123,7 +126,7 @@ export const RegisterForm = () => {
         <div className="justify-center flex gap-2">
           <p>Already have an account</p>
           <Link
-            href="/login"
+            href={`/login?next=${encodeURIComponent(redirectUrl)}`}
             className="hover:font-bold text-blue-500 underline"
           >
             Sign In

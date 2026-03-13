@@ -1,7 +1,7 @@
 "use client";
 
 import { useCardStore } from "@/store/card";
-import { Loader2Icon, LoaderIcon } from "lucide-react";
+import { Loader2Icon } from "lucide-react";
 import { useEffect } from "react";
 import { CreditCard } from "./credit-card";
 import { CreateCreditCardButton } from "./create-credit-card-button";
@@ -9,7 +9,6 @@ import { CreateCreditCardButton } from "./create-credit-card-button";
 export const CardsList = () => {
   const cards = useCardStore((state) => state.cards);
   const loading = useCardStore((state) => state.loading);
-  const error = useCardStore((state) => state.error);
   const fetchCards = useCardStore((state) => state.fetchCards);
   const increaseCardAmountOrSetSelectedCard = useCardStore(
     (state) => state.increaseCardAmountOrSetSelectedCard,

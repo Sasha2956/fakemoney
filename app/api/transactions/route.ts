@@ -6,19 +6,30 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
   try {
     const headersList = await headers();
-    const apiKey = headersList.get("Authorization");
+    const authorization = headersList.get("Authorization");
     const request = await req.json();
     const body = {
       ...request,
       returnUrl: request.return_url,
     } as CreateTransactionRequest;
 
-    if (!apiKey) {
+    if (!authorization) {
       return NextResponse.json(
-        { message: "API key is not assigned" },
-        { status: 500 },
+        { message: "Authorization header is required" },
+        { status: 401 },
       );
     }
+
+    const [type, token] = authorization.split(" ");
+
+    if (type !== "Bearer" || !token) {
+      return NextResponse.json(
+        { message: "Invalid authorization format. Use: Bearer <API_KEY>" },
+        { status: 401 },
+      );
+    }
+
+    const apiKey = token;
 
     const store = await prisma.store.findFirst({
       where: {

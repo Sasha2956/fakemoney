@@ -2,8 +2,11 @@ import { auth } from "@/auth";
 import { ApiKeyCard } from "@/components/dashboard/api-key-card";
 import { CallbacksForm } from "@/components/dashboard/callbacks-form";
 import { DashboardCard } from "@/components/dashboard/dashboard-card";
+import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import prisma from "@/lib/prisma";
+import { CircleHelpIcon } from "lucide-react";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 export default async function StorePage({
@@ -26,10 +29,17 @@ export default async function StorePage({
     <>
       <h1 className="font-bold text-3xl mb-5">{store.name}</h1>
       <Tabs defaultValue="overview">
-        <TabsList>
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="callbacks">Callbacks</TabsTrigger>
-        </TabsList>
+        <div className="flex items-center gap-2">
+          <TabsList>
+            <TabsTrigger value="overview">Overview</TabsTrigger>
+            <TabsTrigger value="callbacks">Callbacks</TabsTrigger>
+          </TabsList>
+          <Link href="/docs/create-transaction">
+            <Button variant="outline">
+              <CircleHelpIcon /> How to create a transaction
+            </Button>
+          </Link>
+        </div>
         <TabsContent value="overview" className="flex gap-3">
           <ApiKeyCard apiKey={store.apiKey} className="flex-1 py-5" />
           <DashboardCard

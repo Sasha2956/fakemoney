@@ -21,10 +21,11 @@ import Link from "next/link";
 import { useState } from "react";
 import { login } from "@/actions/login";
 import { ErrorMessage } from "../error-message";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export const LoginForm = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -35,14 +36,16 @@ export const LoginForm = () => {
   const [error, setError] = useState<string | undefined>();
   const [loading, setLoading] = useState<boolean>(false);
 
+  const nextUrl = searchParams.get("next") || "/dashboard";
+
   const onClick = () => {
-    signIn("github", { callbackUrl: "/dashboard" });
+    signIn("github", { callbackUrl: nextUrl });
   };
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     setLoading(true);
     const result = await login(values);
     setError(result);
-    router.push("/dashboard");
+    router.push(nextUrl);
     setLoading(false);
   };
 
@@ -105,7 +108,7 @@ export const LoginForm = () => {
         <div className="justify-center flex gap-2">
           <p>Don{"'"}t have an account</p>
           <Link
-            href="/register"
+            href={`/register?next=${encodeURIComponent(nextUrl)}`}
             className="hover:font-bold text-blue-500 underline"
           >
             Sign Up
