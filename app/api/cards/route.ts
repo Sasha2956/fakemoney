@@ -8,6 +8,9 @@ import randomColor from "randomcolor";
 export async function GET() {
   try {
     const session = await auth();
+
+    console.log(session)
+
     if (!session?.user || !session.user.id) {
       return NextResponse.json({ message: "Unauthorized" });
     }
@@ -21,6 +24,10 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   try {
     const session = await auth();
+
+
+    console.log(session)
+
     if (!session?.user || !session.user.id) {
       return NextResponse.json({ message: "Unauthorized" });
     }

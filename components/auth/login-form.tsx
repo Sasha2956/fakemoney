@@ -22,6 +22,8 @@ import { useState } from "react";
 import { login } from "@/actions/login";
 import { ErrorMessage } from "../error-message";
 import { useRouter, useSearchParams } from "next/navigation";
+import { FaGithub } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
 
 export const LoginForm = () => {
   const router = useRouter();
@@ -38,9 +40,14 @@ export const LoginForm = () => {
 
   const nextUrl = searchParams.get("next") || "/dashboard";
 
-  const onClick = () => {
+  const onClickGithub = () => {
     signIn("github", { callbackUrl: nextUrl });
   };
+
+  const onClickGoogle = () => {
+    signIn("google", { callbackUrl: nextUrl });
+  };
+
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     setLoading(true);
     const result = await login(values);
@@ -100,10 +107,16 @@ export const LoginForm = () => {
             or
           </p>
         </div>
-        <Button className="w-full" variant="outline" onClick={onClick}>
-          <Github />
-          Sign in with GitHub
-        </Button>
+        <div className="space-y-2">
+          <Button className="w-full" variant="outline" onClick={onClickGithub}>
+            <FaGithub />
+            Sign in with GitHub
+          </Button>
+          <Button className="w-full" variant="outline" onClick={onClickGoogle}>
+            <FcGoogle />
+            Sign in with Google
+          </Button>
+        </div>
 
         <div className="justify-center flex gap-2">
           <p>Don{"'"}t have an account</p>

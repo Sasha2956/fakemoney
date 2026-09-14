@@ -16,7 +16,8 @@ import {
   FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
-import { GithubIcon } from "lucide-react";
+import { FcGoogle } from "react-icons/fc";
+import { FaGithub } from "react-icons/fa";
 import Link from "next/link";
 import { register } from "@/actions/register";
 import { useState } from "react";
@@ -42,6 +43,11 @@ export const RegisterForm = () => {
   const onClickGithub = () => {
     signIn("github", { callbackUrl: redirectUrl || "/dashboard" });
   };
+
+  const onClickGoogle = () => {
+    signIn("google", { callbackUrl: redirectUrl || "/dashboard" });
+  };
+
   const onSubmit = async (values: z.infer<typeof registerSchema>) => {
     setIsLoading(true);
     const result = await register(values);
@@ -118,10 +124,16 @@ export const RegisterForm = () => {
             or
           </p>
         </div>
-        <Button className="w-full" variant="outline" onClick={onClickGithub}>
-          <GithubIcon />
-          Sign in with GitHub
-        </Button>
+        <div className="space-y-2">
+          <Button className="w-full" variant="outline" onClick={onClickGithub}>
+            <FaGithub />
+            Sign in with GitHub
+          </Button>
+          <Button className="w-full" variant="outline" onClick={onClickGoogle}>
+            <FcGoogle />
+            Sign in with Google
+          </Button>
+        </div>
 
         <div className="justify-center flex gap-2">
           <p>Already have an account</p>

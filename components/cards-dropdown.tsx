@@ -73,12 +73,11 @@ export const CardsDropdown = ({
         align="start"
       >
         {cards
-          .filter((card) => card.id !== selected?.id)
           .map((card) => (
             <button
               onClick={() => onClickCard(card)}
               key={card.id}
-              className="flex w-80 flex-1 gap-2"
+              className={cn("flex w-80 flex-1 gap-2 p-2 rounded-md", { "bg-black/50": card.selected })}
             >
               <div
                 className="w-10 h-6 rounded-sm"

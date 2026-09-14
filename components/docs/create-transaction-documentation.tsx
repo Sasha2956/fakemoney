@@ -137,7 +137,7 @@ else:
         </li>
         <li>
           <span className="p-2 rounded-sm bg-muted font-mono">confirmation_url</span>{" "}
-          — A URL value used for redirecting user after successful payment.
+          — A payment URL.
         </li>
         <li>
           <span className="p-2 rounded-sm bg-muted font-mono">return_url</span>{" "}
